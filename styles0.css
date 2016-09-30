@@ -1,11 +1,16 @@
 /**
  *
- * Hey. My name's Samuel Reed. I'm CTO of BitMEX.com and an occasional
- * freelance contractor.
+ * Hey. My name's Keegan McCallum. I'm a full-stack developer with TDAM's
+ * Portfolio Analytics team, entreprenur, hacker, data scientist and
+ * an occasional freelance contractor.
  *
- * I build interactive websites.
+ * I build tools web-based tools for realtime analytics at my day job,
+ * and like to hack on data science, machine learning, security, as well
+ * as cross-platform applications in my free time.
  *
- * How about some live coding?
+ * I've seen a couple sites like this and it seemed like a really cool idea...
+ * SO, without further ado, some live coding:
+ *
  */
 
 /**
@@ -47,7 +52,7 @@ pre:not(:empty) {
   overflow: auto;
   background: rgb(48, 48, 48);
   border: 1px solid #ccc;
-  max-height: 44.6%;
+  max-height: 94.5%;
   width: 49%;
   font-size: 14px;
   font-family: monospace;
