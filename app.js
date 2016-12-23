@@ -4,7 +4,7 @@ import Markdown from 'markdown';
 const md = Markdown.markdown.toHTML;
 import workText from 'raw!./work.md';
 import headerHTML from 'raw!./header.html';
-let styleText = [0, 1, 2, 3].map(function(i) { return require('raw!./styles' + i + '.css'); });
+let styleText = [0, 1, 2, 3, 4].map(function(i) { return require('raw!./styles' + i + '.css'); });
 import preStyles from 'raw!./prestyles.css';
 import replaceURLs from './lib/replaceURLs';
 import {default as writeChar, writeSimpleChar, handleChar} from './lib/writeChar';
@@ -17,13 +17,22 @@ let style, styleEl, workEl, skipAnimationEl, pauseEl;
 let animationSkipped = false, done = false, paused = false;
 let browserPrefix;
 
+// animationSkipped = true;
+
 // Wait for load to get started.
 document.addEventListener("DOMContentLoaded", function() {
-  getBrowserPrefix();
-  populateHeader();
-  getEls();
-  createEventHandlers();
-  startAnimation();
+  style = document.getElementById('style-tag');
+  styleEl = document.getElementById('style-text');
+
+  setupContent();
+
+  // startAnimation();
+
+  // getBrowserPrefix();
+  // populateHeader();
+  // getEls();
+  // createEventHandlers();
+  // startAnimation();
 });
 
 async function startAnimation() {
@@ -31,10 +40,13 @@ async function startAnimation() {
     await writeTo(styleEl, styleText[0], 0, speed, true, 1);
     await writeTo(workEl, workText, 0, speed, false, 1);
     await writeTo(styleEl, styleText[1], 0, speed, true, 1);
-    createWorkBox();
+    setupContent();
+    return;
+    // createWorkBox();
     await Promise.delay(1000);
     await writeTo(styleEl, styleText[2], 0, speed, true, 1);
     await writeTo(styleEl, styleText[3], 0, speed, true, 1);
+    await writeTo(styleEl, styleText[4], 0, speed, true, 1);
   }
   // Flow control straight from the ghettos of Milwaukee
   catch(e) {
@@ -60,7 +72,8 @@ async function surprisinglyShortAttentionSpan() {
      styleHTML = handleChar(styleHTML, txt[i]);
   }
   styleEl.innerHTML = styleHTML;
-  createWorkBox();
+  setupContent();
+  // createWorkBox();
 
   // There's a bit of a scroll problem with this thing
   let start = Date.now();
@@ -148,6 +161,7 @@ function getEls() {
 // Create links in header (now footer).
 //
 function populateHeader() {
+  return
   let header = document.getElementById('header');
   header.innerHTML = headerHTML;
 }
@@ -156,6 +170,7 @@ function populateHeader() {
 // Create basic event handlers for user input.
 //
 function createEventHandlers() {
+  return
   // Mirror user edits back to the style element.
   styleEl.addEventListener('input', function() {
     style.textContent = styleEl.textContent;
@@ -179,10 +194,103 @@ function createEventHandlers() {
   });
 }
 
+async function setupContent() {
+
+  const siteEl = document.getElementById('site');
+  const parallax = document.createElement('div');
+  parallax.classList.add('parallax');
+  siteEl.appendChild(parallax);
+
+  const groups = [`
+      <div id="group1" class="parallax__group">
+        <div class="parallax__layer parallax__layer--base">
+          <div class="title">Base Layer</div>
+        </div>
+      </div>`,
+      `
+      <div id="group2" class="parallax__group">
+        <div class="parallax__layer parallax__layer--base">
+          <div class="title">Base Layer</div>
+        </div>
+        <div class="parallax__layer parallax__layer--back">
+          <div class="title">Background Layer</div>
+        </div>
+      </div>`,
+      `
+      <div id="group3" class="parallax__group">
+        <div class="parallax__layer parallax__layer--fore">
+          <div class="title">Foreground Layer</div>
+        </div>
+        <div class="parallax__layer parallax__layer--base">
+          <div class="title">Base Layer</div>
+        </div>
+      </div>`,
+      `
+      <div id="group4" class="parallax__group">
+        <div class="parallax__layer parallax__layer--base">
+          <div class="title">Base Layer</div>
+        </div>
+        <div class="parallax__layer parallax__layer--back">
+          <div class="title">Background Layer</div>
+        </div>
+        <div class="parallax__layer parallax__layer--deep">
+          <div class="title">Deep Background Layer</div>
+        </div>
+      </div>
+      <div id="group5" class="parallax__group">
+        <div class="parallax__layer parallax__layer--fore">
+          <div class="title">Foreground Layer</div>
+        </div>
+        <div class="parallax__layer parallax__layer--base">
+          <div class="title">Base Layer</div>
+        </div>
+      </div>
+      <div id="group6" class="parallax__group">
+        <div class="parallax__layer parallax__layer--back">
+          <div class="title">Background Layer</div>
+        </div>
+        <div class="parallax__layer parallax__layer--base">
+          <div class="title">Base Layer</div>
+        </div>
+      </div>
+      <div id="group7" class="parallax__group">
+        <div class="parallax__layer parallax__layer--base">
+          <div class="title">Base Layer</div>
+        </div>
+      </div>
+  `];
+
+  const styles = styleText.join('\n');
+  style.textContent = styles;
+
+  let styleHTML = "";
+  for(let i = 0; i < styles.length; i++) {
+     styleHTML = handleChar(styleHTML, styles[i]);
+  }
+  styleEl.innerHTML = styleHTML;
+    // There's a bit of a scroll problem with this thing
+  let start = Date.now();
+  while(Date.now() - 1000 > start) {
+    styleEl.scrollTop = Infinity;
+    await Promise.delay(16);
+  }
+  // await writeTo(styleEl, styleText[0], 0, speed, true, 1);
+  await writeTo(parallax, groups[0], 0, speed, true, 1);
+  // await writeTo(styleEl, styleText[4], 0, speed, true, 1);
+
+  await writeTo(parallax, groups[1], 0, speed, true, 1);
+  await writeTo(parallax, groups[2], 0, speed, true, 1);
+  /*
+  document.getElementById('content').innerHTML = `
+    <div class="site">${replaceURLs(md(workText))}</div>
+  `;*/
+}
+
 //
 // Fire a listener when scrolling the 'work' box.
 //
 function createWorkBox() {
+  return
   if (workEl.classList.contains('flipped')) return;
   workEl.innerHTML = '<div class="text">' + replaceURLs(workText) + '</div>' +
                      '<div class="md">' + replaceURLs(md(workText)) + '<div>';

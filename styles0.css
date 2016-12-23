@@ -27,18 +27,18 @@
  * Black on white is really boring,
  * so let's do something about it.
  */
-
+/*
 html {
   background: rgb(63, 82, 99);
-}
+}*/
 
 /***
  * Hold on...
  */
-
+/*
 pre, a {
   color: white;
-}
+}*/
 
 /**
  * That's better. Sorry about your eyes.
@@ -51,6 +51,7 @@ pre, a {
 pre:not(:empty) {
   overflow: auto;
   background: rgb(48, 48, 48);
+  color: white;
   border: 1px solid #ccc;
   max-height: 94.5%;
   width: 49%;
@@ -104,7 +105,8 @@ body {
  * I can't imagine you'd come just to see the pretty colors.
  */
 
-pre:not(#style-text) {
+/*.parallax {
   -webkit-transform: rotateY(10deg);
   -webkit-transform-origin: left;
 }
+*/

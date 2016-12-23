@@ -8,7 +8,7 @@ Fullstack Developer/Analytics Specialist
 Contact
 -------
 
-* keeganmccallum at gmail dot com
+* keeganmccallum3 at gmail dot com
 
 Availability
 ------------
@@ -20,7 +20,7 @@ Projects
 --------
 
 * ReLease Rentals - a mobile-first real estate rentals market
-* UFess - Canadian University Confessionals aggregator
+* UFess - Canadian university confessionals aggregator
 * ReactMSG - send multimedia, receive a short video of the receiver reacting to it
 
 Open Source
